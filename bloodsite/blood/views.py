@@ -43,3 +43,7 @@ def doner_edit(request, pk):
 def resource_list(request):
     resources = Resource.objects.order_by('description')
     return render(request, 'blood/resource_list.html', {'resources':resources})
+
+def resource_detail(request, pk):
+    resource = get_object_or_404(Resource, pk=pk)
+    return render(request, 'blood/resource_detail.html', {'resource': resource})

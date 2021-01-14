@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from .forms import ResourceForm
 
 danger_supply = 30000
 
@@ -25,3 +24,13 @@ class Resource(models.Model):
     type = models.CharField(max_length=200)
     description = models.CharField(max_length=200)
     supply = models.IntegerField(default=300000)
+
+    def send_sms(self):
+        if self.supply <= danger_supply:
+            numbers = [doner.phone_number for doner in Doner.objects.filter(donating_date__lte=timezone.now())]
+            #send emails
+
+    def use_blood(self, quantity=-30000):
+        resource = Resource.objects.get(type=self.type)
+        resource.supply -= quantity
+        resource.save()

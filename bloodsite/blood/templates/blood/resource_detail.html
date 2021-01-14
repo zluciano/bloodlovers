@@ -1,0 +1,10 @@
+{% extends 'blood/base.html' %}
+
+{% block content %}
+    <div class="resource">
+        <h2>{{ resource.type }}</h2>
+        <h2>{{ resource.description }}</h2>
+        <h2>{{ resource.supply }}</h2>
+        <button type="button" class="save btn btn-default" onclick={{ resource.use_blood }}>Usar sangue</button>
+    </div>
+{% endblock %}
