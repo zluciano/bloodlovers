@@ -1,3 +1,41 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from .forms import DonerForm
+from .models import Doner
+from django.shortcuts import redirect
+from django.utils import timezone
 
-# Create your views here.
+def blood_main(request):
+    return render(request, 'blood/main.html', {})
+
+def doner_list(request):
+    doners = Doner.objects.order_by('name')
+    return render(request, 'blood/doner_list.html', {'doners':doners})
+
+def doner_detail(request, pk):
+    doner = get_object_or_404(Doner, pk=pk)
+    return render(request, 'blood/doner_detail.html', {'doner': doner})
+
+def doner_new(request):
+     if request.method == "POST":
+         form = DonerForm(request.POST)
+         if form.is_valid():
+             doner = form.save(commit=False)
+             doner.donating_date = timezone.now()
+             doner.save()
+             return redirect('doner_detail', pk=doner.pk)
+     else:
+         form = DonerForm()
+     return render(request, 'blood/doner_edit.html', {'form': form})
+
+def doner_edit(request, pk):
+     doner = get_object_or_404(Doner, pk=pk)
+     if request.method == "POST":
+         form = DonerForm(request.doner, instance=doner)
+         if form.is_valid():
+             doner = form.save(commit=False)
+             doner.donating_date = timezone.now()
+             doner.save()
+             return redirect('doner_detail', pk=doner.pk)
+     else:
+         form = DonerForm(instance=doner)
+     return render(request, 'blood/doner_edit.html', {'form': form})

@@ -1,0 +1,9 @@
+{% extends 'blood/base.html' %}
+
+{% block content %}
+    {% for doner in doners %}
+        <div class="doner">
+            <h2><a href="{% url 'doner_detail' pk=doner.pk %}">{{ doner.name }}</a></h2>
+        </div>
+    {% endfor %}
+{% endblock %}
