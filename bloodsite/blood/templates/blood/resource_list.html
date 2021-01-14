@@ -1,0 +1,12 @@
+{% extends 'blood/base.html' %}
+
+{% block content %}
+    {% for resource in resources %}
+        <div class="resource">
+            <h2>Tipo: {{ resource.type }}</h2>
+            <h2>Descrição: {{ resource.description }}</h2>
+            <h2>Quantidade: {{ resource.supply }}mL</h2>
+        </div>
+        <hr>
+    {% endfor %}
+{% endblock %}
