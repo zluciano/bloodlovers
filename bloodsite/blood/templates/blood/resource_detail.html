@@ -5,6 +5,10 @@
         <h2>{{ resource.type }}</h2>
         <h2>{{ resource.description }}</h2>
         <h2>{{ resource.supply }}</h2>
-        <button type="button" class="save btn btn-default" onclick={{ resource.use_blood }}>Usar sangue</button>
+        <form method="POST" class="resource-form">{% csrf_token %}
+            <label for="quantity">Quantidade:</label><br>
+            <input type="text" id="quantity" name="qtt" value=""><br>
+            <button type="submit" class="save btn btn-default">Usar</button>
+        </form>
     </div>
 {% endblock %}

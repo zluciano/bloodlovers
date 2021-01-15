@@ -46,4 +46,8 @@ def resource_list(request):
 
 def resource_detail(request, pk):
     resource = get_object_or_404(Resource, pk=pk)
+    if request.method == "POST":
+        if request.POST['qtt']!='' and request.POST['qtt'].isnumeric():
+            resource.use_blood(int(request.POST['qtt']))
+            return redirect('resource_detail', pk=resource.pk)
     return render(request, 'blood/resource_detail.html', {'resource': resource})
